@@ -26,7 +26,7 @@ School Project 3d Engine of 1CHIF HTL class 2024 using python, glsl and c!
 
 --- [CHIFEngine Discord](https://discord.gg/KfNVQbYK)
 
-Liste der Mitmachended:
+Liste der Mitmachenden:
 
  - Lukas Rennhofer / @LL-Program (Maintainer)
 
