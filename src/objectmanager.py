@@ -1,0 +1,1 @@
+#TODO : Objekt Manager um Texturen, Wavefront Dateien(.obj) und Inhalte zu Laden und es in das VBO und VAO Programm einzutragen

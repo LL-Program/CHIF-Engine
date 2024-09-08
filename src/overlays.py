@@ -1,0 +1,1 @@
+#TODO: Rendere Text über den Bildschirm um z.B FPS oder Delta Time mithilfe von pygame anzuzeigen
