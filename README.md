@@ -1,2 +1,35 @@
-# CHIF-Engine
-School project 3d Engine
+
+# CHIF Engine 🚀
+
+School Project 3d Engine of 1CHIF HTL class 2024 using python, glsl and c!
+
+
+## Run the Project
+
+ - Clone the project
+
+- Windows:
+```bash
+  run.bat
+```
+
+- Linux:
+
+```bash
+  pip install -r requirements.txt
+  python src/main.py
+```
+ - MacOS: 🤷 Why do you use MacOS for Coding???
+
+## Mitmachen
+ - Wenn du aus der 1CHIF bist gehe einfach auf den Discord Server!
+
+--- [CHIFEngine Discord](https://discord.gg/KfNVQbYK)
+
+Liste der Mitmachended:
+
+ - Lukas Rennhofer / @LL-Program (Maintainer)
+
+## Screenshots
+
+![App Screenshot](Ressources/Screenshot1.png)
