@@ -1,4 +1,5 @@
 from model import *
+from objectmanager import ObjectManager
 
 class Scene:
     def __init__(self, app):
@@ -6,6 +7,7 @@ class Scene:
         self.objects = []
         self.load()
         self.skybox = AdvancedSkyBox(app)
+        self.ObjectManager = ObjectManager(app,self)
     def add_object(self, obj):
         self.objects.append(obj)
     def load(self):

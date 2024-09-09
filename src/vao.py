@@ -16,13 +16,11 @@ class VAO:
         self.vaos['shadow_cube'] = self.get_vao(
             program=self.program.programs['shadow_map'],
             vbo = self.vbo.vbos['cube'])
-
-        # cat vao
+        
         self.vaos['objw'] = self.get_vao(
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['objw'])
 
-        # shadow cat vao
         self.vaos['shadow_objw'] = self.get_vao(
             program=self.program.programs['shadow_map'],
             vbo=self.vbo.vbos['objw'])

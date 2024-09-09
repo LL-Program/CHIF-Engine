@@ -5,6 +5,7 @@ import os
 class VBO:
     def __init__(self, ctx):
         self.vbos = {}
+        self.ctx = ctx
         self.vbos['cube'] = CubeVBO(ctx)
         self.vbos['objw'] = OBJVBO(ctx)
         self.vbos['skybox'] = SkyBoxVBO(ctx)
