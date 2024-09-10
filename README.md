@@ -30,7 +30,8 @@ Liste der Mitmachenden:
 
  - Lukas Rennhofer / @LL-Program (Maintainer, Engine Logic)
  - Maximilian Panzenböck / @CraftMasterMax (GUI)
-
+ - Moritz Rottensteiner / 
+@Alyopolo (Shader Coding)
 ## Screenshots
 
 ![App Screenshot](Ressources/Screenshot1.png)
