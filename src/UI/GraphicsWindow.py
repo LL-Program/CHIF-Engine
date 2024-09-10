@@ -59,8 +59,3 @@ class GraphicsSettings(ct.CTk):
 
         # Schedule the next update (refresh every 100ms or 0.1s)
         self.after(100, self.update_labels)
-
-if __name__ == "__main__":
-    app = None  # Replace with actual app instance containing camera and delta_time
-    graphics = GraphicsSettings(app)
-
