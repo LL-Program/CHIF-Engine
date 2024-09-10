@@ -9,11 +9,11 @@ class GraphicsSettings(ct.CTk):
         self.geometry("400x400")  # Increased height for FPS/Position labels
         self.title("Graphics Settings")
 
-        self.create_label_and_slider("FOV", 50, 30, 120, 0.2, 0.5)
-        self.create_label_and_slider("NEAR", 0.1, 0.01, 1, 0.35, 0.5)
-        self.create_label_and_slider("Render Distance", 100, 50, 300, 10000, 0.5)
-        self.create_label_and_slider("SPEED", 0.009, 0.001, 0.05, 0.65, 0.5)
-        self.create_label_and_slider("SENSITIVITY", 0.04, 0.01, 1, 0.8, 0.5)
+        self.create_label_and_slider("FOV","fov", 50, 30, 120, 0.2, 0.5)
+        self.create_label_and_slider("NEAR","near", 0.1, 0.01, 1, 0.35, 0.5)
+        self.create_label_and_slider("Render Distance","far", 100, 200, 10000, 0.5, 0.5)
+        self.create_label_and_slider("SPEED","speed", 0.009, 0.001, 0.05, 0.65, 0.5)
+        self.create_label_and_slider("SENSITIVITY","sensivity", 0.04, 0.01, 1, 0.8, 0.5)
 
         # FPS and Player Position labels
         self.fps_label = ct.CTkLabel(master=self, text="FPS: 0")
@@ -28,7 +28,7 @@ class GraphicsSettings(ct.CTk):
         self.update_labels()
         self.mainloop()
 
-    def create_label_and_slider(self, text, default, min_val, max_val, rel_y, rel_x):
+    def create_label_and_slider(self, text,id, default, min_val, max_val, rel_y, rel_x):
         label = ct.CTkLabel(master=self, text=text)
         label.place(relx=rel_x - 0.2, rely=rel_y, anchor=ct.CENTER)
 
@@ -36,14 +36,14 @@ class GraphicsSettings(ct.CTk):
         slider.set(default)
         slider.place(relx=rel_x + 0.2, rely=rel_y, anchor=ct.CENTER)
 
-        setattr(self, f"{text.lower()}_slider", slider)
+        setattr(self, f"{id}_slider", slider)
 
     def apply_settings(self):
         self.camera.fov = self.fov_slider.get()
         self.camera.near = self.near_slider.get()
         self.camera.far = self.far_slider.get()
         self.camera.speed = self.speed_slider.get()
-        self.camera.sensitivity = self.sensitivity_slider.get()
+        self.camera.sensitivity = self.sensivity_slider.get()
         self.destroy()
 
     def update_labels(self):
@@ -59,8 +59,3 @@ class GraphicsSettings(ct.CTk):
 
         # Schedule the next update (refresh every 100ms or 0.1s)
         self.after(100, self.update_labels)
-
-if __name__ == "__main__":
-    app = None  # Replace with actual app instance containing camera and delta_time
-    graphics = GraphicsSettings(app)
-
