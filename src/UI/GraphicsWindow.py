@@ -58,4 +58,6 @@ class GraphicsSettings(ct.CTk):
         self.position_label.configure(text=f"Position: ({pos.x:.2f}, {pos.y:.2f}, {pos.z:.2f})")
 
         # Schedule the next update (refresh every 100ms or 0.1s)
+
         self.after(100, self.update_labels)
+
