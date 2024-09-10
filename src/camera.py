@@ -1,12 +1,6 @@
 import glm
 import pygame as pg
 
-FOV = 50
-NEAR = 0.1
-FAR = 100
-SPEED = 0.009
-SENSITIVITY = 0.04
-
 #TODO : Collisions
 
 class Camera:
@@ -19,12 +13,17 @@ class Camera:
         self.forward = glm.vec3(0, 0, -1)
         self.yaw = yaw
         self.pitch = pitch
+        self.fov = 50
+        self.near = 0.1
+        self.far = 100
+        self.speed = 0.009
+        self.sensivity = 0.04
         self.m_view = self.get_view_matrix()
         self.m_proj = self.get_projection_matrix()
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
-        self.yaw += rel_x * SENSITIVITY
-        self.pitch -= rel_y * SENSITIVITY
+        self.yaw += rel_x * self.sensivity
+        self.pitch -= rel_y * self.sensivity
         self.pitch = max(-89, min(89, self.pitch))
     def update_camera_vectors(self):
         yaw, pitch = glm.radians(self.yaw), glm.radians(self.pitch)
@@ -40,7 +39,7 @@ class Camera:
         self.update_camera_vectors()
         self.m_view = self.get_view_matrix()
     def move(self):
-        velocity = SPEED * self.app.delta_time
+        velocity = self.speed * self.app.delta_time
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
             self.position += self.forward * velocity
@@ -57,7 +56,7 @@ class Camera:
     def get_view_matrix(self):
         return glm.lookAt(self.position, self.position + self.forward, self.up)
     def get_projection_matrix(self):
-        return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
+        return glm.perspective(glm.radians(self.fov), self.aspect_ratio, self.near, self.far)
 
 
 

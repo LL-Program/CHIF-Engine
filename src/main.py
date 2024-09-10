@@ -8,7 +8,7 @@ from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
 from audiomanager import AudioManager
-
+from UI.UIManager import UIManager
 class CHIFEngine:
     def __init__(self, win_size=(1600, 900)):
         pg.init()
@@ -32,6 +32,7 @@ class CHIFEngine:
         self.scene = Scene(self)
         self.AudioManager = AudioManager(self)
         self.scene_renderer = SceneRenderer(self)
+        self.UIManager = UIManager(self)
         #new 2d
         self.font = pg.font.Font(None, 36)  # Default font, size 36
 
@@ -90,6 +91,8 @@ class CHIFEngine:
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
+                self.UIManager.openGraphicsSettings()
     def render_text(self, text, x, y):
         """Renders text using Pygame and ModernGL"""
         # Render text to a Pygame surface
@@ -123,7 +126,10 @@ class CHIFEngine:
 
     def get_time(self):
         self.time = pg.time.get_ticks() * 0.001
-
+    def update_window_size(self):
+        # Update the Pygame window with the new size
+        pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+        print(f"Window resized to: {self.WIN_SIZE}")
     def run(self):
         while True:
             self.get_time()
