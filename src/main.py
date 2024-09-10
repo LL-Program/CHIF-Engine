@@ -7,7 +7,7 @@ from light import Light
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
-
+from audiomanager import AudioManager
 
 class CHIFEngine:
     def __init__(self, win_size=(1600, 900)):
@@ -30,6 +30,7 @@ class CHIFEngine:
         self.camera = Camera(self)
         self.mesh = Mesh(self)
         self.scene = Scene(self)
+        self.AudioManager = AudioManager(self)
         self.scene_renderer = SceneRenderer(self)
         #new 2d
         self.font = pg.font.Font(None, 36)  # Default font, size 36
