@@ -14,6 +14,6 @@ class Scene:
         app = self.app
         add = self.add_object
         n, s = 20, 2
-        add(OBJWavefront(app, pos=(0, -1, -10)))
+        add(OBJWavefront(app,scale=(1,1,1), pos=(0, -1, -10)))
     def update(self):
         pass

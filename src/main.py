@@ -67,8 +67,7 @@ class CHIFEngine:
                 # x, y, tex_x, tex_y
                 0.0, 0.0, 0.0, 1.0,  # Bottom-left
                 1.0, 0.0, 1.0, 1.0,  # Bottom-right
-                1.0, 1.0, 1.0, 0.0,  # Top-right
-                0.0, 1.0, 0.0, 0.0   # Top-left
+                1.0, 1.0, 1.0, 0.0,  # Top-right 
             ], dtype='f4')
         )
 
@@ -121,7 +120,7 @@ class CHIFEngine:
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         self.scene_renderer.render()
-        self.render_text(f"FPS: {self.clock.get_fps():.2f}", 10, 10)
+        #self.render_text(f"FPS: {self.clock.get_fps():.2f}", 10, 10)
         pg.display.flip()
 
     def get_time(self):
@@ -136,6 +135,7 @@ class CHIFEngine:
             self.check_events()
             self.camera.update()
             self.render()
+            print(f"FPS: {self.delta_time if self.delta_time > 0 else 0}")
             self.delta_time = self.clock.tick(60)
 
 
