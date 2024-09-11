@@ -1,5 +1,7 @@
-import moderngl as mgl
+import customtkinter as ct
 import pygame as pg
+import moderngl as mgl
+import numpy as np
 import sys
 from model import *
 from camera import Camera
@@ -9,6 +11,23 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 from audiomanager import AudioManager
 from UI.UIManager import UIManager
+
+class PygameFrame(ct.CTkFrame):
+    def __init__(self, master, engine, **kwargs):
+        super().__init__(master, **kwargs)
+        self.engine = engine
+        self.canvas = ct.CTkCanvas(self, bg='black')
+        self.canvas.pack(fill='both', expand=True)
+        self.canvas.bind("<Configure>", self.on_resize)
+        self.update_pygame()
+
+    def on_resize(self, event):
+        # Resize the Pygame window to match the canvas size
+        self.engine.update_window_size(self.canvas.winfo_width(), self.canvas.winfo_height())
+        self.update_pygame()
+
+    def update_pygame(self):
+        self.engine.run()
 
 class CHIFEngine:
     def __init__(self, win_size=(1600, 900)):
@@ -27,7 +46,8 @@ class CHIFEngine:
         self.time = 0
         self.delta_time = 0
         self.physics = False
-        #Objects -- 8.9.24
+        
+        # Initialize game objects
         self.light = Light()
         self.camera = Camera(self)
         self.mesh = Mesh(self)
@@ -35,10 +55,9 @@ class CHIFEngine:
         self.AudioManager = AudioManager(self)
         self.scene_renderer = SceneRenderer(self)
         self.UIManager = UIManager(self)
-        #new 2d
-        self.font = pg.font.Font(None, 36)  # Default font, size 36
+        self.font = pg.font.Font(None, 36)
 
-        # Prepare a ModernGL program for rendering 2D textures (text)
+        # Prepare ModernGL program for rendering 2D textures (text)
         self.prog = self.ctx.program(
             vertex_shader="""
             #version 330
@@ -60,94 +79,91 @@ class CHIFEngine:
             void main() {
                 fragColor = texture(text_texture, v_tex);
             }
-            """,
+            """
         )
 
-        # Vertex buffer for rendering the quad (the text)
         self.quad_vbo = self.ctx.buffer(
             np.array([
-                # x, y, tex_x, tex_y
-                0.0, 0.0, 0.0, 1.0,  # Bottom-left
-                1.0, 0.0, 1.0, 1.0,  # Bottom-right
-                1.0, 1.0, 1.0, 0.0,  # Top-right 
+                0.0, 0.0, 0.0, 1.0,
+                1.0, 0.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 0.0,
+                0.0, 1.0, 0.0, 0.0
             ], dtype='f4')
         )
-
-        # Element buffer to define the quad (2 triangles)
         self.quad_ibo = self.ctx.buffer(
             np.array([0, 1, 2, 2, 3, 0], dtype='i4')
         )
-
         self.quad_vao = self.ctx.vertex_array(
             self.prog,
-            [
-                (self.quad_vbo, '2f 2f', 'in_pos', 'in_tex')
-            ],
+            [(self.quad_vbo, '2f 2f', 'in_pos', 'in_tex')],
             self.quad_ibo
         )
+
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                self.mesh.destroy()
-                self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
             if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
                 self.UIManager.openGraphicsSettings()
+
     def render_text(self, text, x, y):
-        """Renders text using Pygame and ModernGL"""
-        # Render text to a Pygame surface
-        text_surface = self.font.render(text, True, (255, 255, 255))  # White text
+        text_surface = self.font.render(text, True, (255, 255, 255))
         text_data = pg.image.tostring(text_surface, "RGBA", True)
         width, height = text_surface.get_size()
 
-        # Create a ModernGL texture from the Pygame surface
         texture = self.ctx.texture((width, height), 4, text_data)
         texture.use(location=0)
 
-        # Adjust the quad vertices based on text size and position
         vertices = np.array([
-            x, y, 0.0, 1.0,  # Bottom-left
-            x + width, y, 1.0, 1.0,  # Bottom-right
-            x + width, y + height, 1.0, 0.0,  # Top-right
-            x, y + height, 0.0, 0.0   # Top-left
+            x, y, 0.0, 1.0,
+            x + width, y, 1.0, 1.0,
+            x + width, y + height, 1.0, 0.0,
+            x, y + height, 0.0, 0.0
         ], dtype='f4')
         self.quad_vbo.write(vertices)
 
-        # Set the screen size uniform
         self.prog['screen_size'].value = self.WIN_SIZE
-
-        # Render the quad with the text texture
         self.quad_vao.render(mgl.TRIANGLES)
+
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         self.scene_renderer.render()
-        #self.render_text(f"FPS: {self.clock.get_fps():.2f}", 10, 10)
         pg.display.flip()
 
     def get_time(self):
         self.time = pg.time.get_ticks() * 0.001
-    def update_window_size(self):
-        # Update the Pygame window with the new size
+
+    def update_window_size(self, width, height):
+        self.WIN_SIZE = (width, height)
         pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
         print(f"Window resized to: {self.WIN_SIZE}")
+
     def run(self):
         while True:
             self.get_time()
             self.check_events()
             self.camera.update()
             self.render()
-            print(f"FPS: {self.delta_time if self.delta_time > 0 else 0} PHYSICS = {self.physics}")
             self.delta_time = self.clock.tick(60)
-    def on_resize(self, event):
-        # Resize the pygame surface to match the new size of the canvas
-        self.pygame_surface = pg.transform.scale(
-            self.pygame_surface, 
-            (self.canvas.winfo_width(), self.canvas.winfo_height())
-        )
-        self.update_pygame()
 
+class MainApp(ct.CTk):
+    def __init__(self):
+        super().__init__()
+        self.title("CHIF Engine with CustomTkinter")
+        self.geometry("1600x900")
 
-if __name__ == '__main__':
-    app = CHIFEngine()
-    app.run()
+        # Initialize the engine
+        self.engine = CHIFEngine()
+
+        # Create a frame for the Pygame engine
+        self.pygame_frame = PygameFrame(master=self, engine=self.engine)
+        self.pygame_frame.pack(fill='both', expand=True)
+
+        # Add additional customtkinter widgets
+        self.label = ct.CTkLabel(master=self, text="This is a CustomTkinter Label")
+        self.label.pack(pady=20)
+
+if __name__ == "__main__":
+    app = MainApp()
+    app.mainloop()

@@ -15,7 +15,7 @@ class Camera:
         self.pitch = pitch
         self.fov = 50
         self.near = 0.1
-        self.far = 100
+        self.far = 1000
         self.speed = 0.009
         self.sensivity = 0.04
         self.m_view = self.get_view_matrix()

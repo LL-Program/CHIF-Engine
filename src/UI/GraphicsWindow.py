@@ -14,7 +14,8 @@ class GraphicsSettings(ct.CTk):
         self.create_label_and_slider("Render Distance","far", 100, 200, 10000, 0.5, 0.5)
         self.create_label_and_slider("SPEED","speed", 0.009, 0.001, 0.05, 0.65, 0.5)
         self.create_label_and_slider("SENSITIVITY","sensivity", 0.04, 0.01, 1, 0.8, 0.5)
-
+        self.checkbox = ct.CTkCheckBox(master=self, text="Physics", onvalue=True, offvalue=False)
+        self.checkbox.pack(padx=20, pady=10)
         # FPS and Player Position labels
         self.fps_label = ct.CTkLabel(master=self, text="FPS: 0")
         self.fps_label.place(relx=0.5, rely=0.9, anchor=ct.CENTER)
@@ -44,6 +45,7 @@ class GraphicsSettings(ct.CTk):
         self.camera.far = self.far_slider.get()
         self.camera.speed = self.speed_slider.get()
         self.camera.sensitivity = self.sensivity_slider.get()
+        self.app.physics = self.checkbox.get()
         self.destroy()
 
     def update_labels(self):

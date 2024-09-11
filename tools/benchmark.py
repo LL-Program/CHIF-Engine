@@ -1,11 +1,8 @@
-#TODO : Benchmarking Programm(Fps Auswerter - analyse), dass ein diagramm mit verschiedenen fps werten erstellt und auswertet mit pandas
+import matplotlib.pyplot as plt
+import numpy as np
 
-class Benchmarker:
-    def __init__(self):
-        self.data = None
-    def display(self):
-        #displayer
-        pass
-    def set_data(self,data):
-        #set self.data
-        pass
+xpoints = np.array([0, 6])
+ypoints = np.array([0, 250])
+
+plt.plot(xpoints, ypoints)
+plt.show()
