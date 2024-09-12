@@ -1,8 +1,7 @@
 
 # CHIF Engine 🚀
-
 School Project 3d Engine of 1CHIF HTL class 2024 using python, glsl and c!
-
+![App Logo](Ressources/CHIF Engine.png)
 
 ## Run the Project
 
