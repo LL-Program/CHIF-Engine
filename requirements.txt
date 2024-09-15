@@ -4,3 +4,4 @@ pygame
 PyGLM 
 pywavefront
 customtkinter
+matplotlib

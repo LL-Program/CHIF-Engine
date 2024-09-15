@@ -9,7 +9,7 @@ class GraphicsSettings(ct.CTk):
         self.geometry("400x400")  # Increased height for FPS/Position labels
         self.title("Graphics Settings")
 
-        self.create_label_and_slider("FOV","fov", 50, 30, 120, 0.2, 0.5)
+        self.create_label_and_slider("FOV","fov", 50, 50, 100, 0.2, 0.5)
         self.create_label_and_slider("NEAR","near", 0.1, 0.01, 1, 0.35, 0.5)
         self.create_label_and_slider("Render Distance","far", 100, 200, 10000, 0.5, 0.5)
         self.create_label_and_slider("SPEED","speed", 0.009, 0.001, 0.05, 0.65, 0.5)

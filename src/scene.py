@@ -17,13 +17,12 @@ class Scene:
         app = self.app
         add = self.add_object
         n, s = 20, 2
-        #add(OBJWavefront(app, scale=(1, 1, 1), pos=(0, -1, -10)))
+        add(OBJWavefront(app, scale=(1, 1, 1), pos=(0, -1, -10)))
         #add(OBJWavefront(app, scale=(1, 1, 1), pos=(0, -1, -1)))
-        self.movingcube = MovingCube(app,pos=(0,12,0),scale=(1,1,1))
-        add(self.movingcube)
+        #add(Cube(app,physics=True,pos=(0,12,0),scale=(1000,1000,1000)))
+        #add(Cube(app,physics=False,pos=(0,5,0),scale=(1,1,1)))
 
     def update(self):
-        self.movingcube.update()
         for obj in self.objects:
             obj.update_physics(self.app.delta_time)  # Update physics
         physics.check_collisions(self.objects)

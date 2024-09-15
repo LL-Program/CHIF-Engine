@@ -1,29 +1,75 @@
 #TODO : Objekt Manager um Texturen, Wavefront Dateien(.obj) und Inhalte zu Laden und es in das VBO und VAO Programm einzutragen
-from vbo import OBJVBO
-from model import * 
-#Lukas 9.9 --- Needs to be done
+from Objects.vbo import VBO
+from model import OBJWavefront
+import pywavefront
+import numpy as np
+
 class ObjectManager:
-    def __init__(self,app,scene):
-        self.vbo = app.mesh.vao.vbo
-        self.vao = app.mesh.vao
-        self.vbos = self.vbo.vbos
-        self.scene = scene
-        self.texture = app.mesh.texture
+    def __init__(self, app, scene):
         self.app = app
-        self.objects = [["objww","objects/Eiffel Tower/UV Eiffel Tower.png"]]
-    def load_Object(self,name,texture,data,pos=(0, -1, -10)):
-        if name in self.vbos:
+        self.scene = scene
+        self.vao = app.mesh.vao
+        self.texture = app.mesh.texture
+        self.objects = {}  # Dictionary to store loaded objects
+    def load_Object(self, name, obj_path, texture_path, pos=(0, -1, -10), scale=(1, 1, 1)):
+        if name in self.objects:
             return
-        self.texture.textures[name] = self.texture.get_texture(path=texture)
-        self.scene.add(OBJWavefront(self.app, pos=pos))
-    def pass_VB(self,name : str):
-        if name in self.vbos:
-            return
-        self.vbos[name] = OBJVBO(self.ctx)
-        self.vao.vaos[name] = self.get_vao(
-            program=self.vao.program.programs['default'],
-            vbo=self.vao.vbo.vbos[name])
-        # shadow vao
-        self.vao.vaos['shadow_'+ name] = self.get_vao(
-            program=self.vao.program.programs['shadow_map'],
-            vbo=self.vao.vbo.vbos[name])
+
+        # Load the .obj file using pywavefront
+        obj_data = pywavefront.Wavefront(obj_path, create_materials=True, collect_faces=True)
+        # Extract vertex data
+        vertices = []
+        for material_name, material in obj_data.materials.items():
+            vertices.extend(material.vertices)
+
+        # Convert to numpy array
+        vertices = np.array(vertices, dtype='f4')
+
+        # Create VBO instance
+        vbo = self.vao.vbo
+        vbo.vbo = self.app.ctx.buffer(data=vertices)
+        vbo.format = '3f 3f 2f'  # Assuming position, normal, and texture coordinates
+        vbo.attribs = ['in_position', 'in_normal', 'in_texcoord_0']
+
+        # Add the VBO to the VAO's vbos dictionary
+        vbo_name = f"obj_{name}"
+        self.vao.vbo.vbos[vbo_name] = vbo
+
+        # Create VAOs for the object
+        self.vao.vaos[vbo_name] = self.vao.get_vao(
+            self.vao.program.programs['default'],
+            vbo
+        )
+        self.vao.vaos[f"shadow_{vbo_name}"] = self.vao.get_vao(
+            self.vao.program.programs['shadow_map'],
+            vbo
+        )
+
+        # Load texture
+        texture = self.texture.get_texture(texture_path)
+
+        # Create OBJWavefront instance
+        obj = OBJWavefront(self.app, vao_name=vbo_name, tex_id=texture, pos=pos, scale=scale)
+
+        # Store the object
+        self.objects[name] = obj
+
+        # Add the object to the scene
+        return obj
+
+    def get_object(self, name):
+        return self.objects.get(name)
+
+    def remove_object(self, name):
+        if name in self.objects:
+            obj = self.objects.pop(name)
+            self.scene.remove(obj)
+            # Clean up VAO and VBO
+            vbo_name = f"obj_{name}"
+            if vbo_name in self.vao.vaos:
+                del self.vao.vaos[vbo_name]
+            if f"shadow_{vbo_name}" in self.vao.vaos:
+                del self.vao.vaos[f"shadow_{vbo_name}"]
+            if vbo_name in self.vao.vbo.vbos:
+                self.vao.vbo.vbos[vbo_name].destroy()
+                del self.vao.vbo.vbos[vbo_name]

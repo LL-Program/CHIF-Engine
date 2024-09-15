@@ -10,9 +10,10 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 from audiomanager import AudioManager
 from UI.UIManager import UIManager
-
+from Logic.black_hole import BlackHole
+from data_collector import FPSLogger
 class CHIFEngine:
-    def __init__(self, win_size=(1600, 900)):
+    def __init__(self, win_size=(1920, 1080)):
         pg.init()
         self.WIN_SIZE = win_size
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
@@ -28,6 +29,10 @@ class CHIFEngine:
         self.time = 0
         self.delta_time = 0
         self.physics = False
+        #data collection
+        self.collect_data = True
+        if self.collect_data:
+            self.Fps_Logger = FPSLogger()
         # Objects initialization
         self.light = Light()
         self.camera = Camera(self)
@@ -36,6 +41,7 @@ class CHIFEngine:
         self.AudioManager = AudioManager(self)
         self.scene_renderer = SceneRenderer(self)
         self.UIManager = UIManager(self)
+        #self.black_hole = BlackHole(self)
         # 2D text rendering setup
         self.font = pg.font.Font(None, 36)
         self.prog = self.ctx.program(
@@ -125,8 +131,10 @@ class CHIFEngine:
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         self.scene_renderer.render()
+        #self.black_hole.render()
         if self.clock.get_fps() < 60:
             self.render_text(f"FPS: {self.clock.get_fps():.2f}", 10, 10)
+        self.Fps_Logger.log_fps(self.clock.get_fps())
         pg.display.flip()
 
     def get_time(self):
@@ -144,7 +152,7 @@ class CHIFEngine:
             self.camera.update()
             self.render()
             print(f"FPS: {self.clock.get_fps()} PHYSICS = {self.physics}")
-            self.delta_time = self.clock.tick(60)
+            self.delta_time = self.clock.tick(1000)
     
 if __name__ == '__main__':
     app = CHIFEngine()

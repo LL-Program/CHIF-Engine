@@ -23,7 +23,7 @@ if %errorlevel% neq 0 (
 :: Install required packages
 echo Installing required packages: moderngl, numpy, pygame, PyGLM, pywavefront, customtkinter(maybe tkinter), matplotlib...
 echo This could take a while if you run it for the first time...
-pip install moderngl numpy pygame PyGLM pywavefront customtkinter
+pip install moderngl numpy pygame PyGLM pywavefront customtkinter matplotlib
 
 :: Check if installation was successful
 if %errorlevel% neq 0 (

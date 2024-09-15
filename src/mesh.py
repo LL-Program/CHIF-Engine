@@ -1,4 +1,4 @@
-from vao import VAO
+from Objects.vao import VAO
 from texture import Texture
 
 class Mesh:

@@ -10,8 +10,8 @@ class Texture:
         self.textures[0] = self.get_texture(path='textures/dirt.png')
         self.textures[1] = self.get_texture(path='textures/dirt.png')
         self.textures[2] = self.get_texture(path='textures/dirt.png')
-        self.textures['objw'] = self.get_texture(path='objects/Eiffel Tower/UV Eiffel Tower.png')
-        self.textures['skybox'] = self.get_texture_cube(dir_path='textures/skybox1/', ext='png')
+        self.textures['objw'] = self.get_texture(path='objects/Astronaut/astronaut.png')
+        self.textures['skybox'] = self.get_texture_cube(dir_path='textures/SkyboxSpace/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
     def get_depth_texture(self):
         depth_texture = self.ctx.depth_texture(self.app.WIN_SIZE)
