@@ -27,10 +27,12 @@ School Project 3d Engine of 1CHIF HTL class 2024 using python, glsl and c!
 
 Liste der Mitmachenden:
 
- - Lukas Rennhofer / @LL-Program (Maintainer, Engine Logic)
+ - Lukas Rennhofer / @LL-Program (Maintainer, Engine Logic, Physics)
  - Maximilian Panzenböck / @CraftMasterMax (GUI)
  - Moritz Rottensteiner / 
 @Alyopolo (Shader Coding)
+ - Matteo Prader / @matm5 (Testing / Benchmark Scripts)
+ - Dominik Pascher / @--- (Editor Scripting)
 ## Screenshots
 
 ![App Screenshot](Ressources/Screenshot1.png)
