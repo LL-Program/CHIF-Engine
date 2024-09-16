@@ -1,0 +1,7 @@
+// Load an object, texture, and configure engine settings
+//CHIFScript Version 0.1
+load object spaceship.obj; // Load spaceship model
+load texture spaceship_texture.png; // Load spaceship texture
+physics on; // Enable physics
+cutscene off; // Disable cutscene mode
+camera on; // Enable camera collision
