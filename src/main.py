@@ -8,7 +8,7 @@ from light import Light
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
-from audiomanager import AudioManager
+from Utils.audiomanager import AudioManager
 from UI.UIManager import UIManager
 from Logic.black_hole import BlackHole
 from data_collector import FPSLogger
@@ -25,6 +25,8 @@ class CHIFEngine:
         pg.display.set_caption("CHIF Engine")
         self.ctx = mgl.create_context()
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
+        self.ctx.enable(mgl.BLEND)
+        self.ctx.blend_func = mgl.SRC_ALPHA, mgl.ONE_MINUS_SRC_ALPHA
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
@@ -41,7 +43,7 @@ class CHIFEngine:
         self.AudioManager = AudioManager(self)
         self.scene_renderer = SceneRenderer(self)
         self.UIManager = UIManager(self)
-        #self.black_hole = BlackHole(self)
+        self.black_hole = BlackHole(self)
         # 2D text rendering setup
         self.font = pg.font.Font(None, 36)
         self.prog = self.ctx.program(
@@ -127,15 +129,25 @@ class CHIFEngine:
         # Render the quad with the text texture
         self.quad_vao.render(mgl.TRIANGLES)
 
-
     def render(self):
+        # Clear the screen
         self.ctx.clear(color=(0.08, 0.16, 0.18))
+
+        # Render the scene
         self.scene_renderer.render()
-        #self.black_hole.render()
+
+        # Render FPS text if below 60
         if self.clock.get_fps() < 60:
             self.render_text(f"FPS: {self.clock.get_fps():.2f}", 10, 10)
+
+        # Log FPS data
         self.Fps_Logger.log_fps(self.clock.get_fps())
+        #self.black_hole.render()
+
+        # Flip the display buffer
         pg.display.flip()
+
+
 
     def get_time(self):
         self.time = pg.time.get_ticks() * 0.0001

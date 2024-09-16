@@ -12,12 +12,25 @@ def handle_collision(obj1, obj2):
     obj1.velocity = glm.vec3(0, 0, 0)
     obj2.velocity = glm.vec3(0, 0, 0)
 
-# Example main loop collision check
-def check_collisions(objects):
+def check_collisions(objects, camera=None):
+    """
+    Check collisions between all objects and optionally with the camera.
+    If a camera is provided, check collisions between the camera and objects.
+    """
+    # Object-object collision
     for i, obj1 in enumerate(objects):
         for j, obj2 in enumerate(objects):
-            if i != j:
+            if i != j:  # Avoid checking an object with itself
                 obj1_min, obj1_max = obj1.get_aabb()
                 obj2_min, obj2_max = obj2.get_aabb()
                 if check_collision(obj1_min, obj1_max, obj2_min, obj2_max):
                     handle_collision(obj1, obj2)
+
+    # Camera-object collision
+    if camera:
+        camera_min, camera_max = camera.get_aabb()
+        for obj in objects:
+            obj_min, obj_max = obj.get_aabb()
+            if check_collision(camera_min, camera_max, obj_min, obj_max):
+                # Prevent the camera from moving through the object by stopping its movement
+                camera.position -= camera.forward * camera.speed  # or any other handling mechanism

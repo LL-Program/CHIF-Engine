@@ -23,7 +23,7 @@ School Project 3d Engine of 1CHIF HTL class 2024 using python, glsl and c!
 ## Mitmachen
  - Wenn du aus der 1CHIF bist gehe einfach auf den Discord Server!
 
---- [CHIFEngine Discord](https://discord.gg/KfNVQbYK)
+ - [CHIFEngine Discord](https://discord.gg/KfNVQbYK)
 
 Liste der Mitmachenden:
 
@@ -32,7 +32,9 @@ Liste der Mitmachenden:
  - Moritz Rottensteiner / 
 @Alyopolo (Shader Coding)
  - Matteo Prader / @matm5 (Testing / Benchmark Scripts)
- - Dominik Pascher / @--- (Editor Scripting)
+ - Dominik Pascher / @lama22222 (Editor Scripting)
+## Todos
+ - [Todos Page](Ressources/Pages/Todo.md)
 ## Screenshots
 
 ![App Screenshot](Ressources/Screenshot1.png)

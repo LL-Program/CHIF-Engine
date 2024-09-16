@@ -1,5 +1,5 @@
 from model import *
-from objectmanager import ObjectManager
+from Utils.objectmanager import ObjectManager
 import Logic.physics as physics
 
 class Scene:
@@ -9,20 +9,13 @@ class Scene:
         self.load()
         self.skybox = AdvancedSkyBox(app)
         self.ObjectManager = ObjectManager(app, self)
-
     def add_object(self, obj):
         self.objects.append(obj)
-
     def load(self):
         app = self.app
         add = self.add_object
-        n, s = 20, 2
         add(OBJWavefront(app, scale=(1, 1, 1), pos=(0, -1, -10)))
-        #add(OBJWavefront(app, scale=(1, 1, 1), pos=(0, -1, -1)))
-        #add(Cube(app,physics=True,pos=(0,12,0),scale=(1000,1000,1000)))
-        #add(Cube(app,physics=False,pos=(0,5,0),scale=(1,1,1)))
-
     def update(self):
         for obj in self.objects:
-            obj.update_physics(self.app.delta_time)  # Update physics
-        physics.check_collisions(self.objects)
+            obj.update_physics(self.app.delta_time)
+        physics.check_collisions(self.objects, self.app.camera)

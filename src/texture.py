@@ -1,6 +1,5 @@
 import pygame as pg
 import moderngl as mgl
-import glm
 
 class Texture:
     def __init__(self, app):
@@ -20,7 +19,6 @@ class Texture:
         return depth_texture
     def get_texture_cube(self, dir_path, ext='png'):
         faces = ['right', 'left', 'top', 'bottom'] + ['front', 'back'][::-1]
-        # textures = [pg.image.load(dir_path + f'{face}.{ext}').convert() for face in faces]
         textures = []
         for face in faces:
             texture = pg.image.load(dir_path + f'{face}.{ext}').convert()
@@ -34,14 +32,11 @@ class Texture:
         for i in range(6):
             texture_data = pg.image.tostring(textures[i], 'RGB')
             texture_cube.write(face=i, data=texture_data)
-
         return texture_cube
     def get_texture(self, path):
         texture = pg.image.load(path).convert()
         texture = pg.transform.flip(texture, flip_x=False, flip_y=True)
-        texture = self.ctx.texture(size=texture.get_size(), components=3,
-                                   data=pg.image.tostring(texture, 'RGB'))
-        # mipmaps
+        texture = self.ctx.texture(size=texture.get_size(), components=3,data=pg.image.tostring(texture, 'RGB'))
         texture.filter = (mgl.LINEAR_MIPMAP_LINEAR, mgl.LINEAR)
         texture.build_mipmaps()
         texture.anisotropy = 32.0
