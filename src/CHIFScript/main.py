@@ -1,6 +1,6 @@
 from time import time
 
-class CHIFScriptInterpreter:
+class SpexInterpreter:
     def __init__(self, engine):
         self.engine_connector = engine
         self.current_loaded_objects = {}
@@ -18,7 +18,8 @@ class CHIFScriptInterpreter:
             'access': self.access_resource,
             'declf': self.declare_function,
             'Sound': self.handle_sound,
-            'print': self.print_func
+            'print': self.print_func,
+            'explode' : self.explode_command
         }
 
     def execute(self, script):
@@ -250,6 +251,11 @@ class CHIFScriptInterpreter:
                 else:   
                     printed_string = printed_string + " " + str(dummy)
         print(printed_string)
+    def explode_command(self, command_parts):
+        if len(command_parts) > 1:
+            print(f"Error - line{self.current_line}: Invalid explotion function format: '{' '.join(command_parts)}'")
+            return
+        self.current_loaded_objects.clear()
 # Example usage:
 
 class MockEngineConnector:
@@ -270,10 +276,12 @@ class MockEngineConnector:
 
 # Example script
 script = """
-decl object 
+decl object astronaut.obj object1;
+explode;
 """
 
 # Create interpreter with a mock engineconnector
 engine = MockEngineConnector()
-interpreter = CHIFScriptInterpreter(engine)
+interpreter = SpexInterpreter(engine)
 interpreter.execute(script)
+print(interpreter.current_loaded_objects)

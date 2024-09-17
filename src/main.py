@@ -12,6 +12,7 @@ from Utils.audiomanager import AudioManager
 from UI.UIManager import UIManager
 from Logic.black_hole import BlackHole
 from data_collector import FPSLogger
+
 class CHIFEngine:
     def __init__(self, win_size=(1920, 1080)):
         pg.init()
@@ -164,7 +165,7 @@ class CHIFEngine:
             self.camera.update()
             self.render()
             print(f"FPS: {self.clock.get_fps()} PHYSICS = {self.physics}")
-            self.delta_time = self.clock.tick(1000)
+            self.delta_time = self.clock.tick()
     
 if __name__ == '__main__':
     app = CHIFEngine()
