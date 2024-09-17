@@ -270,7 +270,7 @@ class MockEngineConnector:
 
 # Example script
 script = """
-physics on;
+decl object 
 """
 
 # Create interpreter with a mock engineconnector
