@@ -33,8 +33,8 @@ if %errorlevel% neq 0 (
 )
 
 :: Run the main Python script
-echo Running src/main.py...
-python src/main.py
+echo Running MainEngine...
+python src/Engine/MainEngine.py
 
 :: Pause to see output if needed
 pause
