@@ -32,7 +32,7 @@ Liste der Mitmachenden:
  - Moritz Rottensteiner / 
 @Alyopolo (Shader Coding)
  - Matteo Prader / @matm5 (Testing / Benchmark Scripts)
- - Dominik Pascher / @lama22222 (Editor Scripting)
+ - Dominik Pascher / @Lama222222 (Editor Scripting)
 ## Todos
  - [Todos Page](Ressources/Pages/Todo.md)
 ## Screenshots
