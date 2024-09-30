@@ -1,7 +1,7 @@
 import re
 from collections import deque
-
-# Helper function to determine operator precedence
+from math import *
+# Helper function
 def precedence(op):
     if op in ('+', '-'):
         return 1
@@ -9,7 +9,6 @@ def precedence(op):
         return 2
     return 0
 
-# Shunting Yard Algorithm to convert infix expression (tokenized) to postfix (RPN)
 def infix_to_postfix(tokens):
     output = []
     operators = deque()
@@ -26,18 +25,18 @@ def infix_to_postfix(tokens):
         elif token_value == ')':
             while operators and operators[-1] != '(':
                 output.append(operators.pop())
-            operators.pop()  # Remove '(' from stack
+            operators.pop()
 
     while operators:
         output.append(operators.pop())
 
     return output
-# Function to evaluate a postfix expression
+
 def evaluate_postfix(expression):
     stack = []
 
     for token in expression:
-        if isinstance(token, float):  # If it's a number, push it onto the stack
+        if isinstance(token, float):
             stack.append(token)
         else:
             right = stack.pop()
@@ -54,17 +53,17 @@ def evaluate_postfix(expression):
     return stack[0] if stack else None
 
 def tokenize_math_expression(expression):
-    # Tokenize the mathematical expression into numbers, operators, and parentheses
     tokens = []
     operators = ['+', '-', '/', '*', '(', ')']
 
-    # Adjust regex to handle floats and integers
     for token in re.findall(r'\d+\.\d+|\d+|\+|\-|\*|\/|\(|\)', expression):
-        if re.match(r'\d+\.\d+|\d+', token):  # Match both float and integer
-            tokens.append(('NUMBER', float(token)))  # Convert to float for both integer and float numbers
+        if re.match(r'\d+\.\d+|\d+', token):
+            tokens.append(('NUMBER', float(token))) 
         elif token in operators:
             tokens.append(('OPERATOR' if token in ['+', '-', '*', '/'] else 'PAREN', token))
         else:
-            pass  # Ignore invalid tokens
+            pass
 
     return tokens
+def pi_key_identifier() -> float:
+    return pi()

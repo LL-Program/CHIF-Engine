@@ -3,7 +3,7 @@ from Spex.src.main import SpexInterpreter
 class SpexConnector:
     def __init__(self, Engine):
         self.Engine = Engine
-        self.interpreter = SpexInterpreter(self.Engine)
+        self.interpreter = SpexInterpreter()
     def load_object(self, name):
         print(f"Object '{name}' loaded.")
 

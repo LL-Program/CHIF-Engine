@@ -1,35 +1,32 @@
 from Spex.src.maths import *
 from time import time
-import re
-
+import os
+from math import *
+from Spex.src.datahandling import DataSystem
 class SpexInterpreter:
-    def __init__(self, engine):
-        self.engine_connector = engine
-        self.current_loaded_objects = {}
+    def __init__(self):
+        #Systems that work together
+        self.Datasystem = DataSystem(self)
         self.active_variables = {}
         self.active_functions = {}
         self.current_line = 0
         self.commands = {
-            'load': self.load_resource,
             'version': self.check_version,
-            'physics': self.set_physics,
-            'cutscene': self.set_cutscene_mode,
-            'camera': self.set_camera_collision,
             'decl': self.declare_resource,
             'destroy': self.destroy_resource,
             'access': self.access_resource,
             'declf': self.declare_function,
-            'Sound': self.handle_sound,
             'print': self.print_func,
             'explode': self.explode_command,
             'math': self.execute_math,
-
+            'include': self.include_command,
+            'if': self.if_command,
+            'pyfunc' : self.pyfunc_command
         }
-
-    def execute(self, script):
+    def execute(self, script,child = None):
         beginning = time()
         script = self.remove_comments(script)
-        script = self.handle_function_declarations(script)  # Process function declarations separately
+        script = self.handle_function_declarations(script)
         commands = script.split(';')
         for command in commands:
             self.current_line += 1
@@ -43,10 +40,15 @@ class SpexInterpreter:
             if cmd in self.commands:
                 self.commands[cmd](command_parts)
             elif cmd in self.active_functions:
-                self.execute_function(cmd)  # Execute function if it is called
+                self.execute_function(cmd)
+            elif self.is_valid_changable_syntax(cmd):
+                self.excute_changable(cmd)
             else:
                 print(f"Error - line::{self.current_line}: Unknown command: {command}")
-        print(f"Executed Code in {time() - beginning} seconds")
+        if child:
+            pass
+        else:
+            print(f"Executed Code in {time() - beginning} seconds")
 
     def execute_math(self, command_parts):
         if len(command_parts) < 3:
@@ -56,22 +58,23 @@ class SpexInterpreter:
         variable_name = command_parts[1]
         expression = ' '.join(command_parts[2:])
 
-        # Tokenize and evaluate the mathematical expression
         expression = self.replace_variables_in_expression(expression)
         tokens = tokenize_math_expression(expression)
         postfix_expr = infix_to_postfix(tokens)
         result = evaluate_postfix(postfix_expr)
 
         if result is not None:
-            self.current_loaded_objects[variable_name] = result
+            self.Datasystem.memory[variable_name]["data"] = result
+            self.Datasystem.memory[variable_name]["dtype"] = "float"
         else:
             print(f"Error - line {self.current_line}: Invalid expression: {expression}")
 
     def replace_variables_in_expression(self, expression):
-        # Replace all variables (e.g., $var) in the expression with their actual values
-        for var_name, var_value in self.current_loaded_objects.items():
-            expression = expression.replace(f"${var_name}", str(var_value))
+        for var_name, var_info in self.Datasystem.memory.items():
+            if "data" in var_info:
+                expression = expression.replace(f"${var_name}", str(var_info["data"]))
         return expression
+
 
 
     def handle_math(self, command_parts):
@@ -80,16 +83,12 @@ class SpexInterpreter:
             return
 
         variable_name = command_parts[1]  # result1, result2, etc.
-        expression = ' '.join(command_parts[2:])  # The full expression like "5+10" or "$result1*2"
-    
-        # Replace variables in the expression (e.g., $result1) with their actual values
+        expression = ' '.join(command_parts[2:])
         expression = self.replace_variables_in_expression(expression)
 
         try:
-            # Evaluate the mathematical expression safely
             result = eval(expression)
-            # Store the result in current_loaded_objects
-            self.current_loaded_objects[variable_name] = result
+            self.Datasystem.memory[variable_name]["data"] = result
             #print(f"Stored {variable_name} = {result}")
         except Exception as e:
             print(f"Error evaluating expression '{expression}': {e}")
@@ -113,7 +112,7 @@ class SpexInterpreter:
             elif token_value == ')':
                 while operator_stack and operator_stack[-1][1] != '(':
                     output.append(operator_stack.pop())
-                operator_stack.pop()  # Pop the '(' from the stack
+                operator_stack.pop()
 
         while operator_stack:
             output.append(operator_stack.pop())
@@ -154,19 +153,14 @@ class SpexInterpreter:
 
     def handle_function_declarations(self, script):
         import re
-        # Match all declf function declarations with code blocks
         pattern = re.compile(r'declf\s+(\w+)\s*\{(.*?)\}', re.DOTALL)
         matches = pattern.findall(script)
         for function_name, function_code in matches:
             function_code = function_code.strip()
-            if function_code.startswith('{'):
-                function_code = function_code[1:].strip()
-            if function_code.endswith('}'):
-                function_code = function_code[:-1].strip()
-            self.active_functions[function_name] = function_code
-        # Remove the function declarations from the script
+            self.active_functions[function_name] = function_code.strip()
         script = pattern.sub('', script)
         return script
+
 
     def check_version(self, command_parts):
         if len(command_parts) != 2:
@@ -226,32 +220,36 @@ class SpexInterpreter:
         if len(command_parts) != 4:
             print(f"Error: Invalid declaration command format: '{' '.join(command_parts)}'")
             return
-        resource_type = command_parts[1].lower()
-        resource_name = command_parts[2]
-        variable_name = command_parts[3]
-        self.current_loaded_objects[variable_name] = resource_name
+        dtype = command_parts[1]
+        resource_name = command_parts[3]
+        variable_name = command_parts[2]
+        if dtype in self.Datasystem.datatypes:
+            if variable_name not in self.Datasystem.memory:
+                self.Datasystem.register_Data(variable_name,dtype,resource_name,isthere=True)
+            self.Datasystem.register_Data(variable_name,dtype,resource_name)
+            return
+        else:
+            print(f"Error: Invalid Datatype Object: '{' '.join(command_parts)}'")
+            return
 
     def destroy_resource(self, command_parts):
         if len(command_parts) != 2:
             print(f"Error: Invalid destroy command format: '{' '.join(command_parts)}'")
             return
         variable_name = command_parts[1]
-        if variable_name in self.current_loaded_objects:
-            del self.current_loaded_objects[variable_name]
+        if variable_name in self.Datasystem.memory:
+            del self.Datasystem.memory[variable_name]
         else:
             print(f"Error - line::{self.current_line}: Variable '{variable_name}' not found.")
 
     def check_if_variable(self, var_name):
-        return var_name.startswith('$') and var_name[1:] in self.current_loaded_objects
+        return var_name.startswith('$') and var_name[1:] in self.Datasystem.memory
 
     def access_variable(self, var_name):
-        return self.current_loaded_objects.get(var_name[1:], None)
+        return self.Datasystem.memory[var_name[1:]]["data"]
 
     def declare_function(self, command_parts, script):
-        # command_parts[1] is the function name
         function_name = command_parts[1]
-    
-        # Collect all lines between '{' and '}'
         function_body = []
         inside_function = False
         for line in script.splitlines():
@@ -267,11 +265,7 @@ class SpexInterpreter:
         
             if inside_function:
                 function_body.append(line)
-
-        # Join the function body back into a single string, delimited by semicolons
         function_code = '; '.join(function_body).strip()
-    
-        # Store the function code in active_functions
         self.active_functions[function_name] = function_code
         #print(f"Declared function '{function_name}' with code: {function_code}")
 
@@ -282,8 +276,8 @@ class SpexInterpreter:
         resource_type = command_parts[1].lower()
         resource_name = command_parts[2]
         if resource_type == 'object':
-            if resource_name in self.current_loaded_objects:
-                print(f"Accessed '{resource_name}' with '{self.current_loaded_objects[resource_name]}'")
+            if resource_name in self.Datasystem.memory:
+                print(f"Accessed Dtype ('{self.Datasystem.memory[resource_name]["dtype"]}') '{resource_name}' with Value '{self.Datasystem.memory[resource_name]["data"]}'")
             else:
                 print(f"Error: Resource '{resource_name}' cannot be accessed")
         else:
@@ -317,19 +311,15 @@ class SpexInterpreter:
         if len(command_parts) > 1:
             print(f"Error - line::{self.current_line}: Invalid explosion function format: '{' '.join(command_parts)}'")
             return
-        self.current_loaded_objects.clear()
+        self.Datasystem.memory.clear()
     def execute_function(self, function_name):
-        # Check if the function exists in active_functions
         function_code = self.active_functions.get(function_name)
     
         if not function_code:
             print(f"Error: Function '{function_name}' not found.")
             return
 
-        # Replace variables in the function code
         function_code = self.replace_variables_in_expression(function_code)
-
-        # Split the function code into lines or commands and execute each
         commands = function_code.split(';')
         for command in commands:
             command = command.strip()
@@ -342,38 +332,107 @@ class SpexInterpreter:
                 self.commands[cmd](command_parts)
             else:
                 print(f"Error in function '{function_name}': Unknown command '{cmd}'")
+    def include_command(self, command_parts):
+        if len(command_parts) != 2:
+            print(f"Error - line::{self.current_line}: Invalid include command format: '{' '.join(command_parts)}'")
+            return
 
+        filename = command_parts[1]
+        included_code = self.load_file(filename)
+        if included_code:
+            #print(f"Including {filename}...")
+            self.handle_function_declarations(included_code)
+            self.execute(included_code,child=True)
+        else:
+            print(f"Failed to include file: {filename}")
+    import os
 
-# Example usage
-class EngineConnector:
-    def __init__(self, Engine):
-        self.Engine = Engine
+    def load_file(self, filename,childlevel = None,suffix = None):
+        levels = 2
+        name_suffix = ".sx"
+        if childlevel:
+            levels = childlevel
+        if suffix:
+            name_suffix = suffix
+        current_dir = os.getcwd()
+        filename = filename + name_suffix
+        path = os.path.join(current_dir, filename)
+        #print(f"Checking for file at: {path}")
+        if os.path.isfile(path):
+            with open(path, 'r') as file:
+                return file.read()
+        directories_to_check = [current_dir]
 
-    def load_object(self, name):
-        print(f"Object '{name}' loaded.")
+        for level in range(levels):
+            next_directories = []
+            for directory in directories_to_check:
+                try:
+                    items = os.listdir(directory)
+                except PermissionError:
+                    continue
+                for item in items:
+                    item_path = os.path.join(directory, item)
+                    if os.path.isdir(item_path):
+                        next_directories.append(item_path)
+                        file_path = os.path.join(item_path, filename)
+                        #print(f"Checking for file at: {file_path}")
+                        if os.path.isfile(file_path):
+                            with open(file_path, 'r') as file:
+                                return file.read()
+            directories_to_check = next_directories
+        print(f"Error: File '{filename}' not found in any of the searched directories.")
+        return None
+    def if_command(self, command_parts):
+        if len(command_parts) >= 2:
+            print(f"Error - line::{self.current_line}: Invalid include command format: '{' '.join(command_parts)}'")
+            return
+        for command in command_parts:
+            self.replace_variables_in_expression(command_parts)
+        var1 = command_parts[1]
+        var2 = command_parts[3]
+        token = command_parts[2]
+        if token == "is":
+            var1 = self.replace_variables_in_expression(var1)
+            var2 = self.replace_variables_in_expression(var2)
+    def pyfunc_command(self,command_parts):
+        if not (len(command_parts) >= 2):
+            print(f"Error - line::{self.current_line}: Invalid pyfunc command format: '{' '.join(command_parts)}'")
+            return
+        func_name = command_parts[1]
+        if len(command_parts) > 2:
+            func_args = command_parts[2:]
+            dummy_arg = []
+            for arg in func_args:
+                dummy_arg.append(self.replace_variables_in_expression(arg))
+            func_args = dummy_arg
+            strs = ""
+            for args in func_args:
+                if args == func_args[-1]:
+                    strs = strs + args
+                else:
+                    strs = strs + args + ","
+            func_args = strs
+        else:
+            func_args = ""
+        eval(func_name+'('+func_args+')')
+    def is_valid_changable_syntax(self,line):
+        pattern = r"\$\w+<\w+;"
+        if re.fullmatch(pattern, line):
+            return True
+        return False
+    def excute_changable(self,changable):
+        commands = changable.strip("<")
+        factor = commands[0]
+        if self.check_if_variable(factor):
+            factor = self.replace_variables_in_expression(factor)
+        
 
-    def load_texture(self, name):
-        print(f"Texture '{name}' loaded.")
-
-    def set_physics(self, enabled):
-        print(f"Physics {'enabled' if enabled else 'disabled'}.")
-
-    def set_cutscene_mode(self, enabled):
-        print(f"Cutscene mode {'enabled' if enabled else 'disabled'}.")
-
-    def set_camera_collision(self, enabled):
-        print(f"Camera collision {'enabled' if enabled else 'disabled'}.")
-
-# Example script
-script = """
-declf print_pi { // Deklariere   Funktion
-    math variable (5+1)/2;
-    print $variable;
-}
-
-"""
-
-# Create interpreter with engine connector
-engine = EngineConnector("Engine Here")
-interpreter = SpexInterpreter(engine)
-interpreter.execute(script)
+# # Example script
+# script = """
+# decl float h 0;
+# math h 5+5;
+# print 5 + 5 = $h;
+# """
+# #interpreter with connector
+# interpreter = SpexInterpreter()
+# interpreter.execute(script)
