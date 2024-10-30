@@ -1,7 +1,9 @@
-moderngl 
-numpy 
-pygame 
-PyGLM 
-pywavefront
-customtkinter
+numpy>=1.26.1
+Pillow>=10.1.0
+pygame>=2.5.2
+pyglet>=2.0.9
+PyOpenAL>=0.7.11a1
+PyOpenGL>=3.1.7
+PyOpenGL-accelerate>=3.1.7
 matplotlib
+pywin32
