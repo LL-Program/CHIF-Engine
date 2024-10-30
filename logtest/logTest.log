@@ -1,0 +1,7 @@
+[INFO    |2024-10-07 19:00:31.161] Save log file : logtest\logTest.log (Logger.py:68)
+[INFO    |2024-10-07 19:00:31.161] TEST START (Logger.py:82)
+[WARNING |2024-10-07 19:00:31.161] Test warning (Logger.py:83)
+[ERROR   |2024-10-07 19:00:31.161] Test error (Logger.py:84)
+[CRITICAL|2024-10-07 19:00:31.161] Test critical (Logger.py:85)
+[INFO    |2024-10-07 19:00:31.161] TEST END! (Logger.py:86)
+[CUSTOM_LOG_LEVEL|2024-10-07 19:00:31.163] Custom log level test. CUSTOM_LOG_LEVEL (Logger.py:90)
