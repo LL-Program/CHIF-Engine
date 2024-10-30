@@ -10,7 +10,7 @@ Multi-Platform 3D Game Engine made from 1CHIF (HTL wrn. Class 2024)
 
 ## Powerful and lightweight 3D Engine
 
-CHIFEngine is a feature-packed, cross-platform game engine to 3D games from a unified interface. It provides a powerful and lightweight Rendering Core and is written in python, so that users can focus on making powerful games without using much ressources and using simple syntax.
+[CHIFEngine](https://github.com/LL-Program/CHIF-Engine) is a feature-packed, cross-platform game engine to create 3D games and scenes from a unified interface. It provides a powerful and lightweight Rendering Core and is written in [python](https://www.python.org/), so that users can focus on making powerful games without using much ressources and using simple syntax.
 
 ## Free and open source
 
@@ -47,7 +47,7 @@ It is currently only Windows supported due to the small development of the Engin
 
 ## Documentation and demos
 
-The official documentation is hosted on <not avalible now, we are woking on it>.
+The official documentation is hosted on [<not avalible now, we are woking on it>]().
 It is maintained by the Godot community in its own [GitHub repository](https://github.com/LL-Program/CHIF-Engine/).
 
 We also maintain official demos in their own [GitHub repository](https://github.com/LL-Program/CHIF-Engine/tree/main/Demos/).
