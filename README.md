@@ -48,7 +48,7 @@ It is currently only Windows supported due to the small development of the Engin
 ## Documentation and demos
 
 The official documentation is hosted on [<not avalible now, we are woking on it>]().
-It is maintained by the Godot community in its own [GitHub repository](https://github.com/LL-Program/CHIF-Engine/).
+It is maintained by LL-Program and its [GitHub repository](https://github.com/LL-Program/CHIF-Engine/).
 
 We also maintain official demos in their own [GitHub repository](https://github.com/LL-Program/CHIF-Engine/tree/main/Demos/).
 
