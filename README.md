@@ -56,7 +56,6 @@ We also maintain official demos in their own [GitHub repository](https://github.
 
  - Lukas Rennhofer / @LL-Program (Maintainer, Engine Logic, Physics)
  - Maximilian Panzenböck / @CraftMasterMax (GUI)
- - Moritz Rottensteiner / 
-@Alyopolo (Shader Coding)
+ - Moritz Rottensteiner / @Alyopolo (SpexImplemetation)
  - Matteo Prader / @matm5 (GUI)
  - Dominik Pascher / @Lama222222 (GUI)
