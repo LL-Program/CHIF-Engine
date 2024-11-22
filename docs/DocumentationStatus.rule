@@ -1,0 +1,362 @@
+📦 
+├─ CHIFEngineMain
+│  ├─ .gitkeep
+│  ├─ Common
+│  │  ├─ Command.py
+│  │  ├─ Constants.py
+│  │  ├─ __init__.py
+│  │  └─ __pycache__
+│  │     ├─ Command.cpython-312.pyc
+│  │     ├─ Constants.cpython-312.pyc
+│  │     └─ __init__.cpython-312.pyc
+│  ├─ OpenGLContext
+│  │  ├─ FrameBuffer.py
+│  │  ├─ Material.py
+│  │  ├─ OpenGLContext.py
+│  │  ├─ RenderBuffer.py
+│  │  ├─ Shader.py
+│  │  ├─ ShaderBuffer.py
+│  │  ├─ Texture.py
+│  │  ├─ UniformBlock.py
+│  │  ├─ UniformBuffer.py
+│  │  ├─ VertexArrayBuffer.py
+│  │  ├─ __init__.py
+│  │  └─ __pycache__
+│  │     ├─ FrameBuffer.cpython-312.pyc
+│  │     ├─ Material.cpython-312.pyc
+│  │     ├─ OpenGLContext.cpython-312.pyc
+│  │     ├─ RenderBuffer.cpython-312.pyc
+│  │     ├─ Shader.cpython-312.pyc
+│  │     ├─ ShaderBuffer.cpython-312.pyc
+│  │     ├─ Texture.cpython-312.pyc
+│  │     ├─ UniformBlock.cpython-312.pyc
+│  │     ├─ UniformBuffer.cpython-312.pyc
+│  │     ├─ VertexArrayBuffer.cpython-312.pyc
+│  │     └─ __init__.cpython-312.pyc
+│  ├─ Render
+│  │  ├─ Actor.py
+│  │  ├─ Animation.py
+│  │  ├─ Atmosphere
+│  │  │  ├─ Atmosphere.py
+│  │  │  ├─ Constants.py
+│  │  │  ├─ Model.py
+│  │  │  ├─ __init__.py
+│  │  │  └─ __pycache__
+│  │  │     ├─ Atmosphere.cpython-312.pyc
+│  │  │     ├─ Constants.cpython-312.pyc
+│  │  │     ├─ Model.cpython-312.pyc
+│  │  │     └─ __init__.cpython-312.pyc
+│  │  ├─ Camera.py
+│  │  ├─ DebugLine.py
+│  │  ├─ Effect.py
+│  │  ├─ Font.py
+│  │  ├─ Gizmo.py
+│  │  ├─ Image.py
+│  │  ├─ Light.py
+│  │  ├─ LightProbe.py
+│  │  ├─ MaterialInstance.py
+│  │  ├─ Mesh.py
+│  │  ├─ Model.py
+│  │  ├─ Ocean
+│  │  │  ├─ Constants.py
+│  │  │  ├─ Ocean.py
+│  │  │  ├─ __init__.py
+│  │  │  └─ __pycache__
+│  │  │     ├─ Constants.cpython-312.pyc
+│  │  │     ├─ Ocean.cpython-312.pyc
+│  │  │     └─ __init__.cpython-312.pyc
+│  │  ├─ PostProcess.py
+│  │  ├─ ProceduralTexture
+│  │  │  ├─ CloudTexture3D.py
+│  │  │  ├─ NoiseTexture3D.py
+│  │  │  ├─ VectorFieldTexture3D.py
+│  │  │  ├─ __init__.py
+│  │  │  └─ __pycache__
+│  │  │     ├─ CloudTexture3D.cpython-312.pyc
+│  │  │     ├─ NoiseTexture3D.cpython-312.pyc
+│  │  │     ├─ VectorFieldTexture3D.cpython-312.pyc
+│  │  │     └─ __init__.cpython-312.pyc
+│  │  ├─ RenderInfo.py
+│  │  ├─ RenderOptions.py
+│  │  ├─ RenderTarget.py
+│  │  ├─ Renderer.py
+│  │  ├─ Renderer_Basic.py
+│  │  ├─ Skeleton.py
+│  │  ├─ Spline.py
+│  │  ├─ Terrain.py
+│  │  ├─ __init__.py
+│  │  └─ __pycache__
+│  │     ├─ Actor.cpython-312.pyc
+│  │     ├─ Animation.cpython-312.pyc
+│  │     ├─ Camera.cpython-312.pyc
+│  │     ├─ DebugLine.cpython-312.pyc
+│  │     ├─ Effect.cpython-312.pyc
+│  │     ├─ Font.cpython-312.pyc
+│  │     ├─ Gizmo.cpython-312.pyc
+│  │     ├─ Light.cpython-312.pyc
+│  │     ├─ LightProbe.cpython-312.pyc
+│  │     ├─ MaterialInstance.cpython-312.pyc
+│  │     ├─ Mesh.cpython-312.pyc
+│  │     ├─ Model.cpython-312.pyc
+│  │     ├─ PostProcess.cpython-312.pyc
+│  │     ├─ RenderInfo.cpython-312.pyc
+│  │     ├─ RenderOptions.cpython-312.pyc
+│  │     ├─ RenderTarget.cpython-312.pyc
+│  │     ├─ Renderer.cpython-312.pyc
+│  │     ├─ Renderer_Basic.cpython-312.pyc
+│  │     ├─ Skeleton.cpython-312.pyc
+│  │     ├─ Spline.cpython-312.pyc
+│  │     ├─ Terrain.cpython-312.pyc
+│  │     └─ __init__.cpython-312.pyc
+│  ├─ ResourceManager
+│  │  ├─ ColladaLoader.py
+│  │  ├─ DDSLoader.py
+│  │  ├─ FontLoader.py
+│  │  ├─ GenerateMaterialInstance.py
+│  │  ├─ ObjLoader.py
+│  │  ├─ ResourceManager.py
+│  │  ├─ TextureGenerator.py
+│  │  ├─ __init__.py
+│  │  └─ __pycache__
+│  │     ├─ ColladaLoader.cpython-312.pyc
+│  │     ├─ DDSLoader.cpython-312.pyc
+│  │     ├─ FontLoader.cpython-312.pyc
+│  │     ├─ ObjLoader.cpython-312.pyc
+│  │     ├─ ResourceManager.cpython-312.pyc
+│  │     ├─ TextureGenerator.cpython-312.pyc
+│  │     └─ __init__.cpython-312.pyc
+│  ├─ UI
+│  │  ├─ QT
+│  │  │  ├─ MainWindow.py
+│  │  │  ├─ MainWindow.ui
+│  │  │  ├─ Widgets.py
+│  │  │  ├─ __init__.py
+│  │  │  └─ __pycache__
+│  │  │     ├─ MainWindow.cpython-312.pyc
+│  │  │     ├─ Widgets.cpython-312.pyc
+│  │  │     └─ __init__.cpython-312.pyc
+│  │  ├─ TKInter
+│  │  │  ├─ EditableTreeview.py
+│  │  │  ├─ MainWindow.py
+│  │  │  ├─ __init__.py
+│  │  │  └─ __pycache__
+│  │  │     ├─ EditableTreeview.cpython-312.pyc
+│  │  │     ├─ MainWindow.cpython-312.pyc
+│  │  │     └─ __init__.cpython-312.pyc
+│  │  ├─ ViewportManager.py
+│  │  ├─ Widget.py
+│  │  ├─ __init__.py
+│  │  └─ __pycache__
+│  │     ├─ ViewportManager.cpython-312.pyc
+│  │     ├─ Widget.cpython-312.pyc
+│  │     └─ __init__.cpython-312.pyc
+│  ├─ Utilities
+│  │  ├─ Attribute.py
+│  │  ├─ AutoEnum.py
+│  │  ├─ Config.py
+│  │  ├─ ExportTexture.py
+│  │  ├─ ImageProcessing.py
+│  │  ├─ Logger.py
+│  │  ├─ RangeVariable.py
+│  │  ├─ SaveTexture.cpp
+│  │  ├─ Server
+│  │  │  ├─ ClientSide
+│  │  │  │  └─ client.py
+│  │  │  └─ server.py
+│  │  ├─ Singleton.py
+│  │  ├─ Spline.py
+│  │  ├─ StateMachine.py
+│  │  ├─ Transform.py
+│  │  ├─ TransformObject.py
+│  │  ├─ Utility.py
+│  │  ├─ XML.py
+│  │  ├─ __init__.py
+│  │  └─ __pycache__
+│  │     ├─ Attribute.cpython-312.pyc
+│  │     ├─ AutoEnum.cpython-312.pyc
+│  │     ├─ Config.cpython-312.pyc
+│  │     ├─ ExportTexture.cpython-312.pyc
+│  │     ├─ ImageProcessing.cpython-312.pyc
+│  │     ├─ Logger.cpython-312.pyc
+│  │     ├─ RangeVariable.cpython-312.pyc
+│  │     ├─ Singleton.cpython-312.pyc
+│  │     ├─ Spline.cpython-312.pyc
+│  │     ├─ StateMachine.cpython-312.pyc
+│  │     ├─ Transform.cpython-312.pyc
+│  │     ├─ TransformObject.cpython-312.pyc
+│  │     ├─ Utility.cpython-312.pyc
+│  │     ├─ XML.cpython-312.pyc
+│  │     └─ __init__.cpython-312.pyc
+│  ├─ __init__.py
+│  └─ src
+│     ├─ CoreManager.py
+│     ├─ GameBackend
+│     │  ├─ GameBackend.py
+│     │  ├─ GameBackend_pygame.py
+│     │  ├─ GameBackend_pyglet.py
+│     │  ├─ __init__.py
+│     │  └─ __pycache__
+│     │     ├─ GameBackend.cpython-312.pyc
+│     │     ├─ GameBackend_pygame.cpython-312.pyc
+│     │     ├─ GameBackend_pyglet.cpython-312.pyc
+│     │     └─ __init__.cpython-312.pyc
+│     ├─ ProjectManager.py
+│     ├─ SceneManager.py
+│     ├─ SoundManager.py
+│     ├─ __init__.py
+│     └─ __pycache__
+│        ├─ CoreManager.cpython-312.pyc
+│        ├─ ProjectManager.cpython-312.pyc
+│        ├─ SceneManager.cpython-312.pyc
+│        ├─ SoundManager.cpython-312.pyc
+│        └─ __init__.cpython-312.pyc
+├─ Demos
+│  └─ PhysicsTest
+│     ├─ Externals
+│     │  ├─ Physics
+│     │  │  ├─ cube.obj
+│     │  │  ├─ cube.urdf
+│     │  │  ├─ plane.obj
+│     │  │  ├─ plane.urdf
+│     │  │  ├─ sphere.obj
+│     │  │  ├─ sphere.urdf
+│     │  │  ├─ suzan.obj
+│     │  │  └─ suzan.urdf
+│     │  └─ Sounds
+│     │     └─ TheEnd.mp3
+│     ├─ Models
+│     │  ├─ Alien
+│     │  │  ├─ alien_v_1.meta
+│     │  │  ├─ alien_v_1.model
+│     │  │  ├─ alien_v_2.meta
+│     │  │  └─ alien_v_2.model
+│     │  └─ Soma_marmopose
+│     │     ├─ Soma_marmopose.meta
+│     │     └─ Soma_marmopose.model
+│     ├─ PyBullet3D.project
+│     ├─ Scenes
+│     │  ├─ physics_scene.meta
+│     │  └─ physics_scene.scene
+│     └─ Scripts
+│        ├─ __init__.meta
+│        ├─ __init__.py
+│        ├─ __pycache__
+│        │  ├─ __init__.cpython-312.pyc
+│        │  └─ main.cpython-312.pyc
+│        ├─ main.meta
+│        └─ main.py
+├─ GitPage
+│  ├─ .gitkeep
+│  ├─ CHIFEngineLogoMain.png
+│  └─ Screenshots
+│     ├─ .gitkeep
+│     ├─ Screenshot 2024-10-06 204907.png
+│     ├─ Screenshot 2024-10-30 172322.png
+│     ├─ Screenshot 2024-10-30 172418.png
+│     └─ Screenshot 2024-10-30 172535.png
+├─ LICENSE
+├─ README.md
+├─ Resource
+│  ├─ .gitkeep
+│  ├─ Effects
+│  │  ├─ default_effect.effect
+│  │  ├─ default_effect.meta
+│  │  ├─ default_particle.meta
+│  │  ├─ default_particle.particle
+│  │  ├─ gpu_particle.effect
+│  │  ├─ gpu_particle.meta
+│  │  ├─ particle.meta
+│  │  └─ particle.particle
+│  ├─ Externals
+│  │  └─ .gitkeep
+│  ├─ Fonts
+│  │  ├─ NanumBarunGothic.font
+│  │  ├─ NanumBarunGothic.meta
+│  │  ├─ NanumBarunGothicBold.font
+│  │  ├─ NanumBarunGothicBold.meta
+│  │  ├─ NanumGothic.font
+│  │  ├─ NanumGothic.meta
+│  │  ├─ NanumGothicBold.font
+│  │  ├─ NanumGothicBold.meta
+│  │  ├─ NanumGothic_Coding.font
+│  │  ├─ NanumGothic_Coding.meta
+│  │  ├─ NanumMyeongjo.font
+│  │  ├─ NanumMyeongjo.meta
+│  │  ├─ NanumMyeongjoBold.font
+│  │  └─ NanumMyeongjoBold.meta
+│  ├─ Meshes
+│  │  ├─ axis_gizmo.mesh
+│  │  ├─ axis_gizmo.meta
+│  │  ├─ skeletal.mesh
+│  │  ├─ skeletal.meta
+│  │  ├─ sphere.mesh
+│  │  ├─ sphere.meta
+│  │  ├─ sponza
+│  │  │  ├─ sponza.mesh
+│  │  │  └─ sponza.meta
+│  │  ├─ suzan.mesh
+│  │  └─ suzan.meta
+│  ├─ Models
+│  │  ├─ axis_gizmo.meta
+│  │  ├─ axis_gizmo.model
+│  │  ├─ skeletal.meta
+│  │  ├─ skeletal.model
+│  │  ├─ sphere.meta
+│  │  ├─ sphere.model
+│  │  ├─ sponza
+│  │  │  ├─ sponza.meta
+│  │  │  └─ sponza.model
+│  │  ├─ suzan.meta
+│  │  └─ suzan.model
+│  ├─ ProceduralTextures
+│  │  ├─ CloudTexture3D.meta
+│  │  ├─ CloudTexture3D.ptexture
+│  │  ├─ NoiseTexture3D.meta
+│  │  ├─ NoiseTexture3D.ptexture
+│  │  ├─ VectorFieldTexture3D.meta
+│  │  └─ VectorFieldTexture3D.ptexture
+│  ├─ Scenes
+│  │  ├─ default_scene.meta
+│  │  ├─ default_scene.scene
+│  │  ├─ sponza_scene.meta
+│  │  └─ sponza_scene.scene
+│  ├─ Scripts
+│  │  ├─ __init__.meta
+│  │  ├─ __init__.py
+│  │  ├─ __pycache__
+│  │  │  ├─ __init__.cpython-312.pyc
+│  │  │  └─ main.cpython-312.pyc
+│  │  ├─ main.meta
+│  │  └─ main.py
+│  ├─ Sounds
+│  │  └─ TheEnd.mp3
+│  ├─ Splines
+│  │  ├─ spline.meta
+│  │  └─ spline.spline
+│  └─ defualt.project
+├─ client_mode.py
+├─ config.ini
+├─ logo.kra
+├─ logo_text.kra
+├─ logs
+│  └─ default.log
+├─ logtest
+│  └─ logTest.log
+├─ mainEngineRuntime.py
+├─ requirements.txt
+├─ run.bat
+├─ start_git.bat
+└─ tools
+   ├─ CHIFDevConsole
+   │  ├─ chif_config.json
+   │  └─ main.py
+   ├─ CHIFScripts
+   │  ├─ main.CHIFScene
+   │  └─ main.sx
+   ├─ OSInfo.py
+   ├─ benchmark.py
+   ├─ data
+   │  └─ fps_data.csv
+   ├─ scenescreator.py
+   └─ stats
+      └─ fps_plot.png

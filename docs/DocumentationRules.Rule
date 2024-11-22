@@ -1,0 +1,12 @@
+ - Text (normal):
+    <p>Text</p>
+
+ - Überschrift (normal, blau):
+    <h2>Text</h2>
+
+ - Überschrift (groß):
+    <h1><span class="">Text</span></h1>
+
+ - Absatz:
+    <br>
+Bei DocumentationStatus wenn fertig '[✅]', wenn nicht '[🛑]'
