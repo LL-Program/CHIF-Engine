@@ -33,9 +33,11 @@ It is currently only Windows x64 supported due to the small development of the E
   git clone https://github.com/LL-Program/CHIF-Engine.git
 ```
 
-- Windows:
-```bash
-  run.bat
+- Visual Studio 2017/19/22 is needed!
+
+ ```bash
+  cd CHIF-Engine/CHIFEngineMain
+  ./GenerateProjects.bat v2022
 ```
 ### Linux
 
