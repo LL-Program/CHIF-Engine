@@ -1,6 +1,6 @@
 
 # CHIFEngine
-Multi-Platform 3D Game Engine made from 1CHIF (HTL wrn. Class 2024) DISCORD -> ...
+Multi-Platform 3D Game Engine made from 1CHIF (HTL wrn. Class 2024)
 
 <p align="center">
   <a href="https://chifengine.netlify.app/">
