@@ -1,1 +1,0 @@
-#TODO: Erstellt eine Datei über die Infos des Prozess-Geräts und der FPS und Render-Effizienz des Programmes auf diesem Gerät

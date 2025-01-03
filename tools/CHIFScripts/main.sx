@@ -1,7 +1,0 @@
-declf my_function { // Deklariere Funktion
-    math result1 5+10; // Speichere 5 + 10 in variable
-    math result2 $result1*2; // Rechnere mit variable
-    print $result1 $result2; // Printe Varaiablen
-}
-
-my_function; // Rufe die Funktion auf
